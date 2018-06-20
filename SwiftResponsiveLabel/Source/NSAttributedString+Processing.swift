@@ -9,11 +9,11 @@
 import Foundation
 import UIKit
 
-public let RLTapResponderAttributeName = "TapResponder"
-public let RLHighlightedForegroundColorAttributeName = "HighlightedForegroundColor"
-public let RLHighlightedBackgroundColorAttributeName = "HighlightedBackgroundColor"
-public let RLBackgroundCornerRadius = "HighlightedBackgroundCornerRadius"
-public let RLHighlightedAttributesDictionary = "HighlightedAttributes"
+public let RLTapResponderAttributeName = NSAttributedStringKey(rawValue: "TapResponder")
+public let RLHighlightedForegroundColorAttributeName = NSAttributedStringKey(rawValue: "HighlightedForegroundColor")
+public let RLHighlightedBackgroundColorAttributeName = NSAttributedStringKey(rawValue: "HighlightedBackgroundColor")
+public let RLBackgroundCornerRadius = NSAttributedStringKey(rawValue: "HighlightedBackgroundCornerRadius")
+public let RLHighlightedAttributesDictionary = NSAttributedStringKey(rawValue: "HighlightedAttributes")
 
 open class PatternTapResponder {
 	let action: (String) -> Void
@@ -33,7 +33,7 @@ extension NSAttributedString {
 		var range = NSMakeRange(NSNotFound, 0)
 		let fontAttributes = self.attributes(at: 0, longestEffectiveRange: &range,
 		in: NSRange(location: 0, length: self.length))
-		return (self.string as NSString).size(attributes: fontAttributes)
+        return (self.string as NSString).size(withAttributes: fontAttributes)
 	}
 	
 	func isNewLinePresent() -> Bool {
@@ -50,7 +50,7 @@ extension NSAttributedString {
 		var processedString = self
 		if (self.string.characters.count > 0) {
 			let rangePointer: NSRangePointer? = nil
-			if let paragraphStyle: NSParagraphStyle =  self.attribute(NSParagraphStyleAttributeName, at: 0, effectiveRange: rangePointer) as? NSParagraphStyle,
+            if let paragraphStyle: NSParagraphStyle =  self.attribute(NSAttributedStringKey.paragraphStyle, at: 0, effectiveRange: rangePointer) as? NSParagraphStyle,
 				let mutableParagraphStyle = paragraphStyle.mutableCopy() as? NSMutableParagraphStyle {
 
 				// Remove the line breaks
@@ -58,7 +58,7 @@ extension NSAttributedString {
 
 				// Apply new style
 				let restyled = NSMutableAttributedString(attributedString: self)
-				restyled.addAttribute(NSParagraphStyleAttributeName, value: mutableParagraphStyle, range: NSMakeRange(0, restyled.length))
+				restyled.addAttribute(NSAttributedStringKey.paragraphStyle, value: mutableParagraphStyle, range: NSMakeRange(0, restyled.length))
 				processedString = restyled
 			}
 		}

@@ -37,7 +37,7 @@ open class PatternHighlighter {
 		- regexString: String
 		- dictionary: [String:AnyObject]
 	*/
-	func highlightPattern(_ regexString: String, dictionary: [String:AnyObject]) {
+	func highlightPattern(_ regexString: String, dictionary: [NSAttributedStringKey:AnyObject]) {
 		do {
 			let regex = try NSRegularExpression(pattern: regexString, options: .caseInsensitive)
 			let descriptor = PatternDescriptor(regularExpression: regex, searchType: PatternSearchType.all, patternAttributes: dictionary)
@@ -102,7 +102,7 @@ open class PatternHighlighter {
 		for range in patternRanges { //Remove attributes from the ranges conditionally
 			if let attributes = patternDescriptor.patternAttributes {
 				for (name, _) in attributes {
-					attributedText.removeAttribute(name, range: range)
+                    attributedText.removeAttribute(name, range: range)
 				}
 			}
 		}

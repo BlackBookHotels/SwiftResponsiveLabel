@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-public typealias RangeAttribute = (key: String, attribute: AnyObject?, range: NSRange)
+public typealias RangeAttribute = (key: NSAttributedStringKey, attribute: AnyObject?, range: NSRange)
 
 open class TextKitStack {
 	fileprivate var textContainer = NSTextContainer()
@@ -167,7 +167,7 @@ open class TextKitStack {
 	open func truncatedRangeForStringWithNewLine() -> NSRange {
 		let numberOfGlyphs = self.layoutManager.numberOfGlyphs
 		var lineRange = NSMakeRange(NSNotFound, 0)
-		let font = self.textStorage.attribute(NSFontAttributeName, at: 0, effectiveRange: nil) as! UIFont
+        let font = self.textStorage.attribute(NSAttributedStringKey.font, at: 0, effectiveRange: nil) as! UIFont
 		let approximateNumberOfLines = Int(self.layoutManager.usedRect(for: self.textContainer).height / font.lineHeight)
 		var index = 0
 		var numberOfLines = 0
@@ -188,9 +188,9 @@ open class TextKitStack {
 		- attributeKey: String
 		- index: Int
 	*/
-	open func rangeAttributeForKey(_ attributeKey: String, atIndex index: Int) -> RangeAttribute {
+	open func rangeAttributeForKey(_ attributeKey: NSAttributedStringKey, atIndex index: Int) -> RangeAttribute {
 		var rangeOfTappedText = NSRange()
-		let attribute = self.textStorage.attribute(attributeKey, at: index, effectiveRange: &rangeOfTappedText)
+        let attribute = self.textStorage.attribute(attributeKey, at: index, effectiveRange: &rangeOfTappedText)
 		return RangeAttribute(attributeKey, attribute as AnyObject?, rangeOfTappedText)
 	}
 	
@@ -213,8 +213,8 @@ open class TextKitStack {
 		- key: String
 		- range: NSRange
 	*/
-	open func addAttribute(_ attribute: AnyObject, forkey key: String, atRange range: NSRange) {
-		self.textStorage.addAttribute(key, value: attribute, range: range)
+	open func addAttribute(_ attribute: AnyObject, forkey key: NSAttributedStringKey, atRange range: NSRange) {
+        self.textStorage.addAttribute(key, value: attribute, range: range)
 	}
 	
 	/** Removes attribute from the textStorage for the given key at the given range
@@ -222,8 +222,8 @@ open class TextKitStack {
 		- key: String
 		- range: NSRange
 	*/
-	open func removeAttribute(forkey key: String, atRange range: NSRange) {
-		self.textStorage.removeAttribute(key, range: range)
+	open func removeAttribute(forkey key: NSAttributedStringKey, atRange range: NSRange) {
+        self.textStorage.removeAttribute(key, range: range)
 	}
 	
 	/** Returns the substring present in given range of the current textStorage

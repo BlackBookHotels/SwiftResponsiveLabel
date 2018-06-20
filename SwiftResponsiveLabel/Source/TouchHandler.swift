@@ -32,8 +32,8 @@ class TouchHandler: NSObject {
 
 	var touchIndex: Int?
 	var selectedRange: NSRange?
-	fileprivate var defaultAttributes: [String: AnyObject]?
-	fileprivate var highlightAttributes: [String: AnyObject]?
+	fileprivate var defaultAttributes: [NSAttributedStringKey: AnyObject]?
+	fileprivate var highlightAttributes: [NSAttributedStringKey: AnyObject]?
 	
 	init(responsiveLabel: SwiftResponsiveLabel) {
 		super.init()
@@ -66,12 +66,12 @@ class TouchHandler: NSObject {
 		var rangeOfTappedText = NSRange()
 		let highlightAttributeInfo = textkitStack.rangeAttributeForKey(RLHighlightedAttributesDictionary, atIndex: touchIndex)
 		rangeOfTappedText = highlightAttributeInfo.range
-		self.highlightAttributes = highlightAttributeInfo.attribute as? [String : AnyObject]
+		self.highlightAttributes = highlightAttributeInfo.attribute as? [NSAttributedStringKey : AnyObject]
 		if let attributes = self.highlightAttributes {
 			self.selectedRange = rangeOfTappedText
-			self.defaultAttributes = [String : AnyObject]()
+			self.defaultAttributes = [NSAttributedStringKey : AnyObject]()
 			for (key, value) in attributes {
-				self.defaultAttributes![key] = textkitStack.rangeAttributeForKey(key, atIndex: touchIndex).attribute
+                self.defaultAttributes![key] = textkitStack.rangeAttributeForKey(key, atIndex: touchIndex).attribute
 				textkitStack.addAttribute(value, forkey: key, atRange: rangeOfTappedText)
 			}
 			self.responsiveLabel?.setNeedsDisplay()

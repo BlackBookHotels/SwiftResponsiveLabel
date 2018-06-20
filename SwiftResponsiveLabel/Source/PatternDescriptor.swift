@@ -28,23 +28,23 @@ Regular Expression for the pattern : NSRegularExpression
 
 Type of pattern search : PatternSearchType
 
-Attributes for the pattern : [String: NSObject]
+Attributes for the pattern : [NSAttributedStringKey: NSObject]
 */
 
 public struct PatternDescriptor {
 	let searchType : PatternSearchType
-	let patternAttributes : [String:AnyObject]?
+	let patternAttributes : [NSAttributedStringKey:AnyObject]?
 	let patternExpression : NSRegularExpression
 	
 	/**
 	- parameters:
 		- regularExpression: An NSRegularExpression which describes the pattern
 		- searchType: PatternSearchType
-		- patternAttributes: [String: AnyObject] 
+		- patternAttributes: [NSAttributedStringKey: AnyObject] 
 	- returns:
 		An instance of pattern descriptor
    */
-	public init(regularExpression: NSRegularExpression, searchType: PatternSearchType, patternAttributes: [String:AnyObject]?) {
+	public init(regularExpression: NSRegularExpression, searchType: PatternSearchType, patternAttributes: [NSAttributedStringKey:AnyObject]?) {
 		self.patternExpression = regularExpression
 		self.searchType = searchType
 		self.patternAttributes = patternAttributes
@@ -55,11 +55,11 @@ public struct PatternDescriptor {
 	- parameters:
 		- dataDetector: NSDataDetector
 		- searchType: PatternSearchType
-		- patternAttributes: [String: AnyObject]
+		- patternAttributes: [NSAttributedStringKey: AnyObject]
 	- returns:
 		An instance of pattern descriptor
 	*/
-	public init(dataDetector: NSDataDetector, searchType: PatternSearchType, patternAttributes: [String:AnyObject]?) {
+	public init(dataDetector: NSDataDetector, searchType: PatternSearchType, patternAttributes: [NSAttributedStringKey:AnyObject]?) {
 		self.patternExpression = dataDetector
 		self.searchType = searchType
 		self.patternAttributes = patternAttributes
